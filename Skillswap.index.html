@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skillswap</title>
+    <!-- Use Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+        /* Custom styles for image containers */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .image-container img {
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        /* Custom styles for FAQ accordion */
+        .accordion-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .accordion-button {
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+        .accordion-content {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+        .accordion-content.active {
+            max-height: 200px; /* Adjust as needed */
+            padding: 1rem;
+        }
+        .rotate-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .rotate-icon.active {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navigation Bar -->
+    <header class="bg-[#78A0B6] shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold text-white mb-2 sm:mb-0">SKILLSWAP</h1>
+            <ul class="flex space-x-4 text-white">
+                <li><a href="#home" class="hover:text-gray-200 transition-colors duration-200">Home</a></li>
+                <li><a href="#about" class="hover:text-gray-200 transition-colors duration-200">About Us</a></li>
+                <li><a href="#faqs" class="hover:text-gray-200 transition-colors duration-200">FAQs</a></li>
+                <li><a href="#howitworks" class="hover:text-gray-200 transition-colors duration-200">How It Works</a></li>
+                <li><a href="#testimonials" class="hover:text-gray-200 transition-colors duration-200">Testimonials</a></li>
+                <li><a href="#contact" class="hover:text-gray-200 transition-colors duration-200">Contact Us</a></li>
+                <li><a href="#" class="hover:text-gray-200 transition-colors duration-200">Book an Appointment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="py-20 bg-[#C8DAE4] text-center">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Discover a World of Skill Exchange on Skillswap</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8">Join Skillswap to unlock a diverse range of skills through collaborative learning. Embrace the power of barter system in education.</p>
+                <div class="flex justify-center space-x-4 mb-16">
+                    <button class="bg-[#1a202c] text-white py-3 px-8 rounded-full text-lg font-medium shadow-lg hover:bg-[#2d3748] transition-colors duration-200">Log In</button>
+                    <button class="bg-[#1a202c] text-white py-3 px-8 rounded-full text-lg font-medium shadow-lg hover:bg-[#2d3748] transition-colors duration-200">Sign Up</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="image-container shadow-xl">
+                        <img src="https://placehold.co/400x300/e0e0e0/ffffff?text=I+AM+STILL+LEARNING" alt="I am still learning" class="w-full h-auto rounded-xl">
+                    </div>
+                    <div class="image-container shadow-xl">
+                        <img src="https://placehold.co/400x300/e0e0e0/ffffff?text=LIVE,+LEARN,+LOVE" alt="Live, learn, love" class="w-full h-auto rounded-xl">
+                    </div>
+                    <div class="image-container shadow-xl">
+                        <img src="https://placehold.co/400x300/e0e0e0/ffffff?text=L.I.V.E.+,+L.E.A.R.N.+,+L.O.V.E." alt="LIVE, LEARN, LOVE" class="w-full h-auto rounded-xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl font-bold text-center mb-12">What we stand for?</h3>
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+                    <div class="image-container flex-1 shadow-lg">
+                        <img src="https://placehold.co/600x400/e0e0e0/ffffff?text=Students" alt="Students" class="w-full h-auto rounded-xl">
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <p class="text-lg">At Skillswap, we believe in the transformative power of skill exchange. Our platform fosters a community where learning and teaching go hand in hand.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8 mb-16">
+                    <div class="image-container flex-1 shadow-lg">
+                        <img src="https://placehold.co/600x400/e0e0e0/ffffff?text=Journey+and+stars" alt="A drawing of a journey with stars" class="w-full h-auto rounded-xl">
+                    </div>
+                    <div class="flex-1 text-center md:text-left p-6 bg-[#C8DAE4] rounded-xl shadow-lg">
+                        <h4 class="text-2xl font-bold mb-4">Our Journey</h4>
+                        <p class="text-lg">Skillswap began its mission to revolutionize skill learning and sharing in Bengaluru. Join us in this meaningful journey towards knowledge exchange.</p>
+                    </div>
+                </div>
+                <h3 class="text-3xl font-bold text-center mb-12">Meet Our Founders</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+                    <div class="image-container w-48 h-48 rounded-full overflow-hidden shadow-lg">
+                        <img src="https://placehold.co/200x200/e0e0e0/ffffff?text=John+Doe" alt="John Doe" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h4 class="text-2xl font-bold">John Doe</h4>
+                        <p class="text-lg">Empowering communities through skill sharing is our passion. Join us on this journey of knowledge exchange.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row-reverse items-center justify-center gap-8">
+                    <div class="image-container w-48 h-48 rounded-full overflow-hidden shadow-lg">
+                        <img src="https://placehold.co/200x200/e0e0e0/ffffff?text=Jane+Smith" alt="Jane Smith" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h4 class="text-2xl font-bold">Jane Smith</h4>
+                        <p class="text-lg">Dedicated to fostering a culture of learning and collaboration through skill exchange. Let's grow together.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="howitworks" class="py-16 bg-[#C8DAE4]">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl font-bold text-center mb-12">Key Features of Skillswap</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-16">
+                    <div class="flex flex-col items-center">
+                        <div class="image-container w-64 h-64 shadow-xl mb-4">
+                            <img src="https://placehold.co/300x300/e0e0e0/ffffff?text=Skill+Exchange" alt="Skill exchange" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Skill Exchange</h4>
+                        <p>Engage in skill exchange with others to learn and teach various skills in Bengaluru.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="image-container w-64 h-64 shadow-xl mb-4">
+                            <img src="https://placehold.co/300x300/e0e0e0/ffffff?text=Barter+System" alt="Barter system" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Barter System</h4>
+                        <p>No need for money, simply exchange skills with other members in a hassle-free manner.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="image-container w-64 h-64 shadow-xl mb-4">
+                            <img src="https://placehold.co/300x300/e0e0e0/ffffff?text=Community+Learning" alt="Community learning" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Community Learning</h4>
+                        <p>Join a vibrant community focused on mutual learning and skill development through active participation.</p>
+                    </div>
+                </div>
+                <h3 class="text-3xl font-bold text-center mb-12">What makes us Different from Others ?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center max-w-5xl mx-auto">
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Skill Swapping</h4>
+                        <p>Unique skill swapping concept</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Barter System</h4>
+                        <p>Money-free skill exchange</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Community Engagement</h4>
+                        <p>Active community learning</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Personal Growth</h4>
+                        <p>Foster personal growth through skill sharing</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQs Section -->
+        <section id="faqs" class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-3xl">
+                <h3 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h3>
+                <div id="faq-accordion" class="border rounded-xl shadow-lg">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>1. How does Skillswap work?</span>
+                            <span class="rotate-icon text-2xl font-bold">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Skillswap operates on a barter system where members exchange skills with one another instead of money. You can list the skills you can teach and the skills you want to learn, and our platform helps you find compatible partners.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>2. Is there a fee for using Skillswap?</span>
+                            <span class="rotate-icon text-2xl font-bold">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>No, Skillswap is a completely free platform. Our goal is to promote learning and skill exchange without financial barriers.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>3. What kind of skills can I learn on Skillswap?</span>
+                            <span class="rotate-icon text-2xl font-bold">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>You can learn a wide variety of skills, from web development and graphic design to photography, cooking, and languages. The skills available depend on what our members are willing to teach.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>4. How can I find people to swap skills with on Skillswap?</span>
+                            <span class="rotate-icon text-2xl font-bold">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Our platform includes a matching feature that connects you with other members who have skills you want to learn and are interested in the skills you can teach. You can also browse through member profiles and contact them directly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-16 bg-[#C8DAE4]">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl font-bold text-center mb-12">Empowering Skills Through Barter</h3>
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+                    <div class="flex-1 text-center md:text-left">
+                        <p class="text-lg mb-4 italic">"Skillswap has transformed the way I learn new skills. I exchanged my cooking lessons for coding expertise, and it was a win-win!"</p>
+                        <p class="font-bold">Sarah Smith</p>
+                        <p class="text-sm text-gray-600">Entrepreneur</p>
+                    </div>
+                    <div class="image-container flex-1 shadow-lg">
+                        <img src="https://placehold.co/600x400/e0e0e0/ffffff?text=Two+people+collaborating+at+a+table" alt="Two people collaborating at a table" class="w-full h-auto rounded-xl">
+                    </div>
+                </div>
+                <h3 class="text-3xl font-bold text-center mb-12">Client Testimonials</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <p class="text-lg mb-4 italic">"Skillswap provided me an amazing opportunity to learn photography in exchange for teaching yoga. The process was smooth, and I enjoyed every moment of this skill exchange. Highly recommend Skillswap!"</p>
+                        <p class="font-bold">Jessica</p>
+                        <p class="text-sm text-gray-600">Yoga Instructor</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <p class="text-lg mb-4 italic">"I exchanged my coding skills for guitar lessons on Skillswap platform. The experience was incredible, and I made a new friend along the way. Skillswap is a game-changer!"</p>
+                        <p class="font-bold">Michael</p>
+                        <p class="text-sm text-gray-600">Software Developer</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <p class="text-lg mb-4 italic">"Skillswap allowed me to expand my cooking skills by trading Spanish lessons. It was a fun and rewarding experience. Skillswap has made learning so much more enjoyable!"</p>
+                        <p class="font-bold">Sophia</p>
+                        <p class="text-sm text-gray-600">Developer</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg">
+                        <p class="text-lg mb-4 italic">"I learned graphic design by offering my marketing expertise on Skillswap. The exchange was seamless, and I am grateful for the new skill I acquired. Skillswap is the future of learning!"</p>
+                        <p class="font-bold">David</p>
+                        <p class="text-sm text-gray-600">Graphic Designer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact" class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-3xl text-center">
+                <h3 class="text-3xl font-bold mb-4">Get in Touch with Skillswap Team</h3>
+                <p class="mb-8">Have any questions or feedback? Reach out to us directly!</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <form class="space-y-4">
+                        <input type="text" placeholder="First Name*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#78A0B6]">
+                        <input type="text" placeholder="Last Name*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#78A0B6]">
+                        <input type="email" placeholder="Email*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#78A0B6]">
+                        <textarea placeholder="Your Message*" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#78A0B6]"></textarea>
+                        <button type="submit" class="w-full bg-[#1a202c] text-white py-3 rounded-lg text-lg font-medium shadow-lg hover:bg-[#2d3748] transition-colors duration-200">Join Us</button>
+                    </form>
+                    <div class="image-container shadow-lg">
+                        <img src="https://placehold.co/600x400/e0e0e0/ffffff?text=Skill+Swap+Office" alt="Skill Swap Office" class="w-full h-auto rounded-xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-[#78A0B6] py-8 text-white text-center">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col items-center justify-center space-y-2">
+                    <p class="flex items-center space-x-2">
+                        <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg></span>
+                        <span>contact@skillswap.com</span>
+                    </p>
+                    <p class="flex items-center space-x-2">
+                        <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg></span>
+                        <span>Bengaluru</span>
+                    </p>
+                    <p class="flex items-center space-x-2">
+                        <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.744 4.466a1 1 0 01-.54 1.06l-1.548.774a11.08 11.08 0 003.96 3.96l.774-1.548a1 1 0 011.059-.54l4.466.744a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg></span>
+                        <span>+91 1234567890</span>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // JavaScript for FAQ accordion functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const accordionItem = button.parentElement;
+                    const accordionContent = accordionItem.querySelector('.accordion-content');
+                    const icon = button.querySelector('.rotate-icon');
+                    
+                    // Close all other open accordion items
+                    document.querySelectorAll('.accordion-content.active').forEach(item => {
+                        if (item !== accordionContent) {
+                            item.classList.remove('active');
+                            item.parentElement.querySelector('.rotate-icon').classList.remove('active');
+                        }
+                    });
+
+                    // Toggle the clicked accordion item
+                    accordionContent.classList.toggle('active');
+                    icon.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
