@@ -1,0 +1,319 @@
+import { Card, CardContent, CardHeader } from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { MapPin, Briefcase, Calendar, Edit, Plus, Award, BookOpen } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+
+interface ProfilePageProps {
+  user: {
+    name: string;
+    avatar: string;
+    title: string;
+    location: string;
+    connections: number;
+    profileViews: number;
+  };
+}
+
+export function ProfilePage({ user }: ProfilePageProps) {
+  const skillsToTeach = [
+    { name: "React", level: "Expert", endorsements: 47 },
+    { name: "TypeScript", level: "Advanced", endorsements: 32 },
+    { name: "Node.js", level: "Advanced", endorsements: 28 },
+    { name: "UI/UX Design", level: "Intermediate", endorsements: 21 },
+  ];
+
+  const skillsToLearn = [
+    { name: "Python", progress: 65, teacher: "Sarah Chen" },
+    { name: "Machine Learning", progress: 40, teacher: "Sarah Chen" },
+    { name: "AWS", progress: 30, teacher: "Emily Park" },
+    { name: "GraphQL", progress: 15, teacher: "Looking for teacher" },
+  ];
+
+  const swapSessions = [
+    {
+      partner: "Sarah Chen",
+      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200",
+      teaching: "React & TypeScript",
+      learning: "Python & ML",
+      totalSessions: 12,
+      nextSession: "Tomorrow, 6:00 PM",
+    },
+    {
+      partner: "Michael Rodriguez",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+      teaching: "React & UI/UX",
+      learning: "Figma & Design Systems",
+      totalSessions: 8,
+      nextSession: "Friday, 3:00 PM",
+    },
+    {
+      partner: "Emily Park",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
+      teaching: "Node.js",
+      learning: "AWS & Docker",
+      totalSessions: 5,
+      nextSession: "Next Monday, 5:00 PM",
+    },
+  ];
+
+  const achievements = [
+    { title: "Early Adopter", description: "One of the first 100 members", icon: "🏆" },
+    { title: "Knowledge Sharer", description: "Completed 25+ teaching sessions", icon: "🎓" },
+    { title: "Fast Learner", description: "Completed 3 skills in 30 days", icon: "⚡" },
+    { title: "Network Builder", description: "Connected with 50+ people", icon: "🤝" },
+  ];
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-6">
+      {/* Profile Header */}
+      <Card className="mb-6">
+        <div className="h-32 bg-gradient-to-r from-[#B8C7B5] via-[#8FA090] to-[#C4D0C4] rounded-t-lg" />
+        <CardContent className="relative pb-6">
+          <div className="flex flex-col md:flex-row gap-6 -mt-16 md:-mt-12">
+            <div className="flex flex-col items-center md:items-start">
+              <ImageWithFallback
+                src={user.avatar}
+                alt={user.name}
+                className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
+              />
+            </div>
+
+            <div className="flex-1 md:mt-16">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div>
+                  <h1 className="font-bold text-2xl mb-1">{user.name}</h1>
+                  <p className="text-gray-700 mb-2">{user.title}</p>
+                  <div className="flex flex-wrap gap-3 text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <MapPin size={16} />
+                      <span>{user.location}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Briefcase size={16} />
+                      <span>{user.connections} connections</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Calendar size={16} />
+                      <span>Joined January 2025</span>
+                    </div>
+                  </div>
+                </div>
+                <Button>
+                  <Edit size={16} className="mr-2" />
+                  Edit Profile
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-[#8FA090]">{user.profileViews}</div>
+              <div className="text-sm text-gray-600">Profile Views</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">25</div>
+              <div className="text-sm text-gray-600">Sessions Taught</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600">18</div>
+              <div className="text-sm text-gray-600">Sessions Learned</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-orange-600">4</div>
+              <div className="text-sm text-gray-600">Active Swaps</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Tabs defaultValue="skills" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="skills">Skills</TabsTrigger>
+          <TabsTrigger value="sessions">Active Sessions</TabsTrigger>
+          <TabsTrigger value="achievements">Achievements</TabsTrigger>
+          <TabsTrigger value="about">About</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="skills">
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Skills I Can Teach */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="text-green-600" size={20} />
+                    <h3 className="font-semibold">Skills I Can Teach</h3>
+                  </div>
+                  <Button size="sm" variant="ghost">
+                    <Plus size={16} />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {skillsToTeach.map((skill, index) => (
+                  <div key={index} className="border-b pb-4 last:border-0 last:pb-0">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h4 className="font-semibold">{skill.name}</h4>
+                        <Badge variant="secondary" className="bg-green-100 text-green-800 mt-1">
+                          {skill.level}
+                        </Badge>
+                      </div>
+                      <Button size="sm" variant="outline">Edit</Button>
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      {skill.endorsements} endorsements
+                    </p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            {/* Skills I'm Learning */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Award className="text-blue-600" size={20} />
+                    <h3 className="font-semibold">Skills I'm Learning</h3>
+                  </div>
+                  <Button size="sm" variant="ghost">
+                    <Plus size={16} />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {skillsToLearn.map((skill, index) => (
+                  <div key={index} className="border-b pb-4 last:border-0 last:pb-0">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h4 className="font-semibold">{skill.name}</h4>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Teacher: {skill.teacher}
+                        </p>
+                      </div>
+                      <span className="text-sm font-semibold text-blue-600">
+                        {skill.progress}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-blue-600 h-2 rounded-full transition-all"
+                        style={{ width: `${skill.progress}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="sessions">
+          <div className="space-y-4">
+            {swapSessions.map((session, index) => (
+              <Card key={index}>
+                <CardContent className="p-6">
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <ImageWithFallback
+                      src={session.avatar}
+                      alt={session.partner}
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg mb-2">{session.partner}</h3>
+                      <div className="grid md:grid-cols-2 gap-4 mb-3">
+                        <div>
+                          <p className="text-sm text-gray-600">Teaching:</p>
+                          <p className="font-semibold text-green-700">{session.teaching}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-600">Learning:</p>
+                          <p className="font-semibold text-blue-700">{session.learning}</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-4 text-sm">
+                        <span className="text-gray-600">
+                          <span className="font-semibold">{session.totalSessions}</span> sessions completed
+                        </span>
+                        <span className="text-gray-600">
+                          Next: <span className="font-semibold">{session.nextSession}</span>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex md:flex-col gap-2">
+                      <Button size="sm">Schedule</Button>
+                      <Button size="sm" variant="outline">Message</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="achievements">
+          <div className="grid md:grid-cols-2 gap-4">
+            {achievements.map((achievement, index) => (
+              <Card key={index}>
+                <CardContent className="p-6 flex items-start gap-4">
+                  <div className="text-4xl">{achievement.icon}</div>
+                  <div>
+                    <h3 className="font-semibold mb-1">{achievement.title}</h3>
+                    <p className="text-sm text-gray-600">{achievement.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="about">
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="font-semibold mb-4">About</h3>
+              <p className="text-gray-700 mb-6">
+                Passionate full-stack developer with a love for learning and teaching. I believe in the power of
+                knowledge sharing and collaborative learning. With 5 years of experience in web development, I'm
+                always excited to help others while expanding my own skill set.
+              </p>
+
+              <h3 className="font-semibold mb-4">Experience</h3>
+              <div className="space-y-4">
+                <div className="border-l-2 border-blue-600 pl-4">
+                  <h4 className="font-semibold">Senior Full Stack Developer</h4>
+                  <p className="text-sm text-gray-600">Tech Corp Inc. • 2022 - Present</p>
+                  <p className="text-sm mt-2">
+                    Leading frontend architecture and mentoring junior developers in React and TypeScript.
+                  </p>
+                </div>
+                <div className="border-l-2 border-gray-300 pl-4">
+                  <h4 className="font-semibold">Full Stack Developer</h4>
+                  <p className="text-sm text-gray-600">Startup Co. • 2020 - 2022</p>
+                  <p className="text-sm mt-2">
+                    Built and maintained multiple web applications using React, Node.js, and PostgreSQL.
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="font-semibold mb-4 mt-6">Education</h3>
+              <div className="border-l-2 border-blue-600 pl-4">
+                <h4 className="font-semibold">Bachelor of Science in Computer Science</h4>
+                <p className="text-sm text-gray-600">University of Technology • 2016 - 2020</p>
+              </div>
+
+              <Button className="mt-6">
+                <Edit size={16} className="mr-2" />
+                Edit About Section
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
