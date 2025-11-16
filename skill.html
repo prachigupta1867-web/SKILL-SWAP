@@ -1,0 +1,580 @@
+// src/App.tsx
+import { useState } from 'react';
+
+type Page = 'home' | 'login' | 'signup' | 'dashboard' | 'browse' | 'profile' | 'video';
+
+const App = () => {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({ name: 'Riya', avatar: '👩🏽' });
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <HomePage onNavigate={setCurrentPage} />;
+      case 'login':
+        return <LoginPage onNavigate={setCurrentPage} onLogin={handleLogin} />;
+      case 'signup':
+        return <SignupPage onNavigate={setCurrentPage} />;
+      case 'dashboard':
+        return <DashboardPage user={user} onNavigate={setCurrentPage} />;
+      case 'browse':
+        return <BrowseSkillsPage onNavigate={setCurrentPage} />;
+      case 'profile':
+        return <ProfilePage user={user} onNavigate={setCurrentPage} />;
+      case 'video':
+        return <VideoCallPage onNavigate={setCurrentPage} />;
+      default:
+        return <HomePage onNavigate={setCurrentPage} />;
+    }
+  };
+
+  const handleLogin = (name: string) => {
+    setIsLoggedIn(true);
+    setUser({ ...user, name });
+    setCurrentPage('dashboard');
+  };
+
+  return <div>{renderPage()}</div>;
+};
+
+// ============ HOME PAGE ============
+const HomePage = ({ onNavigate }: { onNavigate: (page: Page) => void }) => {
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const categories = [
+    { id: 1, name: 'Art & Design', icon: '🎨' },
+    { id: 2, name: 'Tech & Coding', icon: '💻' },
+    { id: 3, name: 'Music & Dance', icon: '🎵' },
+    { id: 4, name: 'Languages', icon: '🗣️' }
+  ];
+
+  const mentors = [
+    { id: 1, name: 'Arjun', skill: 'Photography', avatar: '👨🏾' },
+    { id: 2, name: 'Maya', skill: 'Dance', avatar: '👨🏻' },
+    { id: 3, name: 'Sara', skill: 'Web Dev', avatar: '👨🏽' }
+  ];
+
+  const testimonials = [
+    "I taught guitar and learned graphic design in return.",
+    "Amazing experience learning photography from Arjun!",
+    "Swapped my coding skills for Spanish lessons."
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => onNavigate('home')}>
+              <div className="w-8 h-8 bg-gray-900 rounded flex items-center justify-center text-white">🔄</div>
+              <span className="text-xl font-bold text-gray-900">Skill Swap</span>
+            </div>
+            
+            <div className="hidden md:flex items-center gap-8">
+              <a onClick={() => onNavigate('home')} className="text-gray-700 hover:text-gray-900 cursor-pointer">Home</a>
+              <a href="#how" className="text-gray-700 hover:text-gray-900 cursor-pointer">How it Works</a>
+              <a onClick={() => onNavigate('browse')} className="text-gray-700 hover:text-gray-900 cursor-pointer">Browse Skills</a>
+              <a href="#post" className="text-gray-700 hover:text-gray-900 cursor-pointer">Post a Skill</a>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button onClick={() => onNavigate('login')} className="text-gray-700 hover:text-gray-900 px-4 py-2">Login</button>
+              <button onClick={() => onNavigate('signup')} className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-medium">
+                Signup
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <section className="bg-white py-16">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            Swap Skills. Learn Anything. Teach Anything
+          </h1>
+          <p className="text-xl text-gray-600 mb-8">
+            A global community for care and sharing — no money, just knowledge.
+          </p>
+          
+          <div className="flex justify-center gap-4">
+            <button onClick={() => onNavigate('browse')} className="bg-green-800 hover:bg-green-900 text-white px-6 py-3 rounded-lg font-medium">
+              Browse Skills
+            </button>
+            <button onClick={() => onNavigate('signup')} className="border-2 border-gray-300 hover:border-gray-400 text-gray-700 px-6 py-3 rounded-lg font-medium">
+              Offer Your Skill
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {categories.map(cat => (
+            <div
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`bg-white p-8 rounded-lg text-center cursor-pointer transition-all ${
+                selectedCategory === cat.id ? 'shadow-lg ring-2 ring-green-600' : 'shadow hover:shadow-md'
+              }`}
+            >
+              <div className="text-4xl mb-3">{cat.icon}</div>
+              <h3 className="font-semibold text-gray-900">{cat.name}</h3>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-6 py-8">
+        <div className="bg-white rounded-lg shadow-sm p-8">
+          <div className="flex items-start gap-4">
+            <div className="text-4xl text-gray-300">"</div>
+            <div className="flex-1">
+              <p className="text-lg text-gray-700 mb-4">{testimonials[currentTestimonial]}</p>
+              <button onClick={() => onNavigate('signup')} className="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg text-sm font-medium">
+                Connect
+              </button>
+            </div>
+          </div>
+          
+          <div className="flex justify-center gap-2 mt-6">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentTestimonial(idx)}
+                className={`w-2 h-2 rounded-full ${idx === currentTestimonial ? 'bg-gray-600' : 'bg-gray-300'}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-gray-200 py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">Featured Mentors</h2>
+            <button onClick={() => onNavigate('signup')} className="bg-green-800 hover:bg-green-900 text-white px-6 py-3 rounded-lg font-medium">
+              Start Swapping Skills Today
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {mentors.map(mentor => (
+              <div key={mentor.id} className="bg-white rounded-lg p-6 text-center">
+                <div className="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4 flex items-center justify-center text-5xl">
+                  {mentor.avatar}
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">{mentor.name}</h3>
+                <div className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                  {mentor.skill}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer className="bg-white py-8">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex gap-6 mb-4 md:mb-0">
+              <a href="#about" className="text-gray-600 hover:text-gray-900">About</a>
+              <a href="#contact" className="text-gray-600 hover:text-gray-900">Contact</a>
+              <a href="#faq" className="text-gray-600 hover:text-gray-900">FAQ</a>
+              <a href="#terms" className="text-gray-600 hover:text-gray-900">Terms & Privacy</a>
+            </div>
+            
+            <div className="flex gap-4">
+              <a href="#" className="text-gray-600 hover:text-gray-900 text-xl">📘</a>
+              <a href="#" className="text-gray-600 hover:text-gray-900 text-xl">🐦</a>
+              <a href="#" className="text-gray-600 hover:text-gray-900 text-xl">📷</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+// ============ LOGIN PAGE ============
+const LoginPage = ({ onNavigate, onLogin }: { onNavigate: (page: Page) => void; onLogin: (name: string) => void }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onLogin('Riya');
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex">
+      <div className="w-1/2 bg-green-100 p-12 flex flex-col justify-center">
+        <div className="text-5xl mb-4">👋</div>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Hello Skill Swap!
+        </h1>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">
+          Swap skills,<br />learn anything,<br />Teach anything.
+        </h2>
+        <p className="text-gray-700 text-lg">
+          Connect with people, share what you know, and gain what you want — without money!
+        </p>
+        <p className="text-sm text-gray-600 mt-8">© 2025 Skill Swap. All rights reserved</p>
+      </div>
+
+      <div className="w-1/2 bg-white p-12 flex flex-col justify-center">
+        <div className="max-w-md mx-auto w-full">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Login</h2>
+            <div className="flex gap-4">
+              <button onClick={() => onNavigate('home')} className="text-gray-600 hover:text-gray-900">Home</button>
+              <button onClick={() => onNavigate('home')} className="text-gray-600 hover:text-gray-900">How it Works</button>
+              <button onClick={() => onNavigate('browse')} className="text-gray-600 hover:text-gray-900">Browse Skills</button>
+              <button onClick={() => onNavigate('signup')} className="border border-gray-300 px-4 py-1 rounded-lg hover:border-gray-400">Sign up</button>
+            </div>
+          </div>
+
+          <p className="text-gray-600 mb-6">Please login to your account to continue.</p>
+
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label className="block text-gray-700 mb-2">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg font-medium mb-4"
+            >
+              Login
+            </button>
+          </form>
+
+          <p className="text-center text-gray-600">
+            Don't have an account?{' '}
+            <button onClick={() => onNavigate('signup')} className="text-green-700 hover:text-green-800 font-medium">
+              Sign up
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============ SIGNUP PAGE ============
+const SignupPage = ({ onNavigate }: { onNavigate: (page: Page) => void }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    interests: '',
+    skills: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onNavigate('login');
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex">
+      <div className="w-1/2 bg-green-100 p-12 flex flex-col justify-center">
+        <div className="text-5xl mb-4">👋</div>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Hello Skill Swap!</h1>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">
+          Swap skills,<br />learn anything,<br />Teach anything.
+        </h2>
+        <p className="text-gray-700 text-lg">
+          Connect with people, share what you know, and gain what you want — without money!
+        </p>
+        <p className="text-sm text-gray-600 mt-8">© 2025 Skill Swp. All rights reserved</p>
+      </div>
+
+      <div className="w-1/2 bg-white p-12 flex flex-col justify-center">
+        <div className="max-w-md mx-auto w-full">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Create Your Profile</h2>
+            <button onClick={() => onNavigate('home')} className="text-gray-600 hover:text-gray-900">Sign up</button>
+          </div>
+
+          <p className="text-gray-600 mb-6">Please fill out the information below to get started.</p>
+
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Name</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">What are you interested in?</label>
+              <select
+                value={formData.interests}
+                onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                required
+              >
+                <option value="">Select...</option>
+                <option value="art">Art & Design</option>
+                <option value="tech">Tech & Coding</option>
+                <option value="music">Music & Dance</option>
+                <option value="languages">Languages</option>
+              </select>
+            </div>
+
+            <div className="mb-6">
+              <label className="block text-gray-700 mb-2">Skills you can teach</label>
+              <input
+                type="text"
+                value={formData.skills}
+                onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                placeholder="e.g., Photography, Guitar, Python"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg font-medium"
+            >
+              Continue
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============ DASHBOARD PAGE ============
+const DashboardPage = ({ user, onNavigate }: { user: any; onNavigate: (page: Page) => void }) => {
+  const swapRequests = [
+    { id: 1, teachSkill: 'graphic design', learnSkill: 'photography', partner: 'Arjun' },
+    { id: 2, teachSkill: 'Spanish', learnSkill: 'data science', partner: 'Maya' }
+  ];
+
+  const notifications = [
+    { id: 1, text: 'New swap request from Arjun' },
+    { id: 2, text: 'New match with Maya' },
+    { id: 3, text: 'Reminder: Swap with Riya' }
+  ];
+
+  const suggestedUsers = [
+    { id: 1, name: 'Arjun', skill: 'Photography', avatar: '👨🏾' },
+    { id: 2, name: 'Maya', skill: 'Dance', avatar: '👨🏻' }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => onNavigate('home')}>
+            <div className="w-8 h-8 bg-gray-900 rounded flex items-center justify-center text-white">🔄</div>
+            <span className="text-xl font-bold">Skill Swap</span>
+          </div>
+          <div className="flex gap-8">
+            <a onClick={() => onNavigate('home')} className="text-gray-700 hover:text-gray-900 cursor-pointer">Home</a>
+            <a href="#how" className="text-gray-700 hover:text-gray-900">How it Works</a>
+            <a onClick={() => onNavigate('browse')} className="text-gray-700 hover:text-gray-900 cursor-pointer">Browse Skills</a>
+            <a href="#post" className="text-gray-700 hover:text-gray-900">Post a Skill</a>
+          </div>
+          <div className="flex items-center gap-4">
+            <button onClick={() => onNavigate('login')} className="text-gray-700 hover:text-gray-900">Login</button>
+            <button onClick={() => onNavigate('signup')} className="bg-green-600 text-white px-4 py-2 rounded-lg">Signup</button>
+          </div>
+        </div>
+      </nav>
+
+      <div className="max-w-6xl mx-auto px-6 py-8 flex gap-6">
+        <div className="w-64">
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="flex items-center gap-3 mb-6 pb-6 border-b">
+              <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-2xl">
+                {user.avatar}
+              </div>
+              <div>
+                <div className="font-semibold">{user.name}</div>
+                <button onClick={() => onNavigate('profile')} className="text-sm text-green-700 hover:text-green-800">
+                  View Profile
+                </button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-50 flex items-center gap-2">
+                <span>👤</span> Profile
+              </button>
+              <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-50 flex items-center gap-2">
+                <span>📚</span> My Skills
+              </button>
+              <button className="w-full text-left px-4 py-2 rounded bg-green-50 text-green-700 flex items-center gap-2">
+                <span>🔄</span> Swap Requests
+              </button>
+              <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-50 flex items-center gap-2">
+                <span>⚙️</span> Settings
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-1">
+          <h1 className="text-2xl font-bold mb-2">Welcome, {user.name}</h1>
+          <p className="text-gray-600 mb-6">Find and connect with people to swap skills.</p>
+
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-4">Active Swap Requests</h2>
+            <div className="space-y-3">
+              {swapRequests.map(swap => (
+                <div key={swap.id} className="bg-white rounded-lg p-4 shadow-sm flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gray-300"></div>
+                    <div>
+                      <div className="font-medium">I can teach {swap.teachSkill}</div>
+                      <div className="text-sm text-gray-600">I want to learn {swap.learnSkill}</div>
+                    </div>
+                  </div>
+                  <button onClick={() => onNavigate('video')} className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg">
+                    View
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold mb-4">Suggested Users</h2>
+            <div className="space-y-3">
+              {suggestedUsers.map(suggestedUser => (
+                <div key={suggestedUser.id} className="bg-white rounded-lg p-4 shadow-sm flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-2xl">
+                      {suggestedUser.avatar}
+                    </div>
+                    <div>
+                      <div className="font-medium">{suggestedUser.name}</div>
+                      <div className="text-sm text-gray-600">Teaches {suggestedUser.skill}</div>
+                    </div>
+                  </div>
+                  <button className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg">
+                    Connect
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="w-80">
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <h3 className="font-bold mb-4">Notifications</h3>
+            <div className="space-y-3">
+              {notifications.map(notif => (
+                <div key={notif.id} className="p-3 bg-green-50 rounded-lg text-sm">
+                  {notif.text}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============ BROWSE SKILLS PAGE ============
+const BrowseSkillsPage = ({ onNavigate }: { onNavigate: (page: Page) => void }) => {
+  const skills = [
+    { id: 1, category: 'Art & Design', name: 'Graphic Design', teacher: 'Sarah', avatar: '👩🏻' },
+    { id: 2, category: 'Tech & Coding', name: 'Python Programming', teacher: 'Alex', avatar: '👨🏽' },
+    { id: 3, category: 'Music & Dance', name: 'Guitar', teacher: 'Mike', avatar: '👨🏼' },
+    { id: 4, category: 'Languages', name: 'Spanish', teacher: 'Maria', avatar: '👩🏽' },
+    { id: 5, category: 'Art & Design', name: 'Photography', teacher: 'Arjun', avatar: '👨🏾' },
+    { id: 6, category: 'Tech & Coding', name: 'Web Development', teacher: 'Sara', avatar: '👨🏽' }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => onNavigate('home')}>
+            <div className="w-8 h-8 bg-gray-900 rounded flex items-center justify-center text-white">🔄</div>
+            <span className="text-xl font-bold">Skill Swap</span>
+          </div>
+          <div className="flex gap-8">
+            <a onClick={() => onNavigate('home')} className="text-gray-700 hover:text-gray-900 cursor-pointer">Home</a>
+            <a href="#how" className="text-gray-700 hover:text-gray-900">How it Works</a>
+            <a onClick={() => onNavigate('browse')} className="text-gray-700 hover:text-gray-900 font-semibold cursor-pointer">Browse Skills</a>
+            <a href="#post" className="text-gray-700 hover:text-gray-900">Post a Skill</a>
+          </div>
+          <div className="flex gap-3">
+            <button onClick={() => onNavigate('login')} className="text-gray-700 hover:text-gray-900 px-4 py-2">Login</button>
+            <button onClick={() => onNavigate('signup')} className="bg-green-600 text-white px-4 py-2 rounded-lg">Signup</button>
+          </div>
+        </div>
+      </nav>
+
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <h1 className="text-3xl font-bold mb-2">Browse Skills</h1>
+        <p className="text-gray-600 mb-8">Discover skills you can learn from our community</p>
+
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search for a skill..."
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {skills.map(skill => (
+            <div key={skill.id} className="bg-white rounded-lg p-6 shadow-sm">
+              <div className="text-sm text-green-700 mb-2">{skill.category}</div>
+              <h3 className="text-xl font-bold mb-4">{skill.name}</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-2xl">
+                  {skill.avatar}
+                </div>
+                <div>
+                  <div className="font-medium">{skill.teacher}</div>
+                  <div className="text-sm text-gray-600">Teacher</div>
+                </div>
+              </div>
+              <button onClick={() => onNavigate('signup')} className="w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded-lg">
+                Connect
+              </button>
